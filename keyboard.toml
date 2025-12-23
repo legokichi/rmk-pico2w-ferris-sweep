@@ -4,13 +4,11 @@ product_name = "rmk-pico2w-ferris-sweep"
 vendor_id = 0x4c4b
 product_id = 0x4643
 manufacturer = "RMK"
-# どっち？
 board = "pi_pico_w"
-chip = "rp2350"
 
 [host]
 #一時的に無効化
-vial_enabled = false
+#vial_enabled = false
 
 [storage]
 #vialとsplitには必要
@@ -19,23 +17,12 @@ enabled = true
 clear_storage = true
 
 [layout]
-rows = 2
-cols = 4
+rows = 1
+cols = 2
 layers = 1
-# keymap と matrix_map のどちらかを使う
-# keymap は deprecated
 # https://rmk.rs/main/docs/configuration/keymap_configuration/keycodes.html
-#keymap = [
-#    [
-#        ["A", "B"],
-#        ["LCtrl", "LShift"],
-#    ],
-#    [
-#        ["_", "_"],
-#        ["_", "_"],
-#    ],
-#]
 matrix_map = """
+(0,0,L) (0,1,R)
 """
 
 [[layer]]
@@ -43,7 +30,6 @@ name = "base_layer"
 # ここどうすりゃええねん
 keys = """
 A B
-LCtrl LShift
 """
 
 [ble]
@@ -53,8 +39,8 @@ enabled = true
 connection = "ble"
 
 [split.central]
-rows = 2
-cols = 2
+rows = 1
+cols = 1
 row_offset = 0
 col_offset = 0
 ble_addr = [0x18, 0xe2, 0x21, 0x80, 0xc0, 0xc7]
@@ -63,23 +49,21 @@ ble_addr = [0x18, 0xe2, 0x21, 0x80, 0xc0, 0xc7]
 matrix_type = "direct_pin"
 direct_pin_low_active = true
 direct_pins = [
-    ["PIN_6", "PIN_7"],
-    ["PIN_19", "PIN_20"]
+    ["PIN_6"],
 ]
 
 [[split.peripheral]]
-rows = 2
-cols = 2
-row_offset = 2
-col_offset = 2
+rows = 1
+cols = 1
+row_offset = 0
+col_offset = 0
 ble_addr = [0x7e, 0xfe, 0x73, 0x9e, 0x66, 0xe3]
 
 [split.peripheral.matrix]
 matrix_type = "direct_pin"
 direct_pin_low_active = true
 direct_pins = [
-    ["PIN_6", "PIN_7"],
-    ["PIN_19", "PIN_20"]
+    ["PIN_6"],
 ]
 
 [rmk]

@@ -2192,32 +2192,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5be167a7af36ee22fe3115051bc51f6e6c7054c9348e28deb4f49bd6f705a315"
 
 [[package]]
-name = "pico2wh"
-version = "0.1.0"
-dependencies = [
- "bt-hci",
- "const-gen",
- "cortex-m-rt",
- "cyw43",
- "cyw43-pio",
- "defmt 1.0.1",
- "defmt-rtt",
- "embassy-executor",
- "embassy-rp",
- "embassy-time",
- "json",
- "panic-probe",
- "portable-atomic",
- "rand",
- "rand_chacha",
- "rand_core 0.6.4",
- "reqwest",
- "rmk",
- "static_cell",
- "xz2",
-]
-
-[[package]]
 name = "pin-project-lite"
 version = "0.2.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2620,6 +2594,32 @@ dependencies = [
  "serde_derive",
  "syn 2.0.111",
  "toml",
+]
+
+[[package]]
+name = "rmk-pico2w-ferris-sweep"
+version = "0.1.0"
+dependencies = [
+ "bt-hci",
+ "const-gen",
+ "cortex-m-rt",
+ "cyw43",
+ "cyw43-pio",
+ "defmt 1.0.1",
+ "defmt-rtt",
+ "embassy-executor",
+ "embassy-rp",
+ "embassy-time",
+ "json",
+ "panic-probe",
+ "portable-atomic",
+ "rand",
+ "rand_chacha",
+ "rand_core 0.6.4",
+ "reqwest",
+ "rmk",
+ "static_cell",
+ "xz2",
 ]
 
 [[package]]
