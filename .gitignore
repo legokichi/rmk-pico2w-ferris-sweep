@@ -1,1 +1,4 @@
 target
+cyw43-firmware
+*.hex
+*.uf2
