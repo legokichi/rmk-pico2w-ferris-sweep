@@ -20,7 +20,8 @@ Split keyboard firmware for RP2350 (Pico 2 W) using Rust (`no_std`).
    ```
 3. Optional: install `cargo-make` for `cargo make` tasks:
    ```sh
-   cargo install cargo-make
+   cargo install flip-link cargo-make
+   curl --proto '=https' --tlsv1.2 -LsSf https://github.com/probe-rs/probe-rs/releases/latest/download/probe-rs-tools-installer.sh | sh
    ```
 
 ## Build

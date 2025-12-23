@@ -1,16 +1,16 @@
 [package]
-name = "pico2wh"
+name = "rmk-pico2w-ferris-sweep"
 version = "0.1.0"
 authors = ["Haobo Gu <haobogu@outlook.com>"]
 description = "Keyboard firmware written in Rust"
 homepage = "https://github.com/haobogu/rmk"
 repository = "https://github.com/haobogu/rmk"
 readme = "README.md"
-edition = "2021"
+edition = "2024"
 license = "MIT OR Apache-2.0"
 
 [dependencies]
-rmk = { version = "0.8", features = ["pico_w_ble", "split"] }
+rmk = { version = "0.8", features = ["pico_w_ble", "async_matrix", "split", "storage", "usb_log"] }
 embassy-time = { version = "0.5", features = ["defmt"] }
 embassy-rp = { version = "0.8", features = [
     "rp235xa",
@@ -39,6 +39,7 @@ rand_core = { version = "0.6" }
 rand_chacha = { version = "0.3", default-features = false }
 
 [features]
+# skip download of CYW43 firmware(Pico 2 W に載っている CYW43（Wi‑Fi/BLE チップ）
 skip-cyw43-firmware = []
 # avoid having to use --allow-multiple-definition linker flag
 # on macOS with Apple Silicon at least
@@ -74,6 +75,8 @@ opt-level = "z"         # optimize for binary size
 overflow-checks = false
 lto = "fat"
 
+# Pico W 系は RMK 公式ガイドで Embassy の特定コミット固定が必要とされているため
+# (crates.io 未反映の修正を使う目的で patch.crates-io を指定)
 [patch.crates-io]
 cyw43 = { git = "https://github.com/embassy-rs/embassy", rev = "faacad6" }
 embassy-time-driver = { git = "https://github.com/embassy-rs/embassy", rev = "faacad6" }
