@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 - `src/central.rs` and `src/peripheral.rs` are the two no_std firmware entry points (split keyboard).
-- `build.rs` generates Vial config at build time and wires linker scripts; `memory.x` holds the RP2040 memory map.
+- `build.rs` generates Vial config at build time and wires linker scripts; `memory.x` holds the RP2350 memory map.
 - `keyboard.toml` + `vial.json` are the source-of-truth for layout and Vial metadata.
 - `cyw43-firmware/` contains Wi-Fi/BLE firmware blobs downloaded by the build script.
 - `target/` is build output; keep it untracked.

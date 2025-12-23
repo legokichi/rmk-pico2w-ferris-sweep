@@ -1,13 +1,10 @@
 [tasks.install-llvm-tools]
 install_crate = { rustup_component_name = "llvm-tools" }
 
-[tasks.flip-link]
-install_crate = { crate_name = "flip-link", binary = "flip-link", test_arg = ["-h"] }
-
 [tasks.build]
 command = "cargo"
 args = ["build", "--release"]
-dependencies = ["install-llvm-tools", "flip-link"]
+dependencies = ["install-llvm-tools"]
 
 [tasks.objcopy-central]
 install_crate = { crate_name = "cargo-binutils", binary = "cargo", test_arg = [
@@ -58,7 +55,7 @@ args = [
     "--output-path",
     "pico2wh-central.uf2",
     "--family",
-    "rp2040",
+    "rp2350-arm-ns",
 ]
 dependencies = ["objcopy-central"]
 
@@ -75,7 +72,7 @@ args = [
     "--output-path",
     "pico2wh-peripheral.uf2",
     "--family",
-    "rp2040",
+    "rp2350-arm-ns",
 ]
 dependencies = ["objcopy-peripheral"]
 

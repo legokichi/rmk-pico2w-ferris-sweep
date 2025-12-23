@@ -888,6 +888,7 @@ dependencies = [
  "pio",
  "rand_core 0.6.4",
  "rand_core 0.9.3",
+ "rp-binary-info",
  "rp-pac",
  "rp2040-boot2",
  "sha2-const-stable",
@@ -2553,7 +2554,6 @@ dependencies = [
  "embassy-embedded-hal",
  "embassy-executor",
  "embassy-futures 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "embassy-hal-internal",
  "embassy-nrf",
  "embassy-rp",
  "embassy-sync 0.7.2 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -2564,17 +2564,14 @@ dependencies = [
  "embedded-io-async",
  "embedded-storage",
  "embedded-storage-async",
- "fixed",
  "futures",
  "heapless 0.9.2",
  "paste",
- "pio",
  "postcard",
  "rand_core 0.6.4",
  "rmk-config",
  "rmk-macro",
  "rmk-types",
- "rp-pac",
  "sequential-storage",
  "serde",
  "serde_derive",
@@ -2651,6 +2648,12 @@ dependencies = [
  "typeid",
  "unicode-ident",
 ]
+
+[[package]]
+name = "rp-binary-info"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "88ed2051a0bf2c726df01cfce378ed8a367be2a6e402fc183857f429a346d429"
 
 [[package]]
 name = "rp-pac"
