@@ -4,7 +4,7 @@ product_name = "rmk-pico2w-ferris-sweep"
 vendor_id = 0x4c4b
 product_id = 0x4643
 manufacturer = "RMK"
-board = "pi_pico_w"
+board = "pi_pico_2_w"
 
 [host]
 #一時的に無効化
@@ -68,4 +68,3 @@ direct_pins = [
 
 [rmk]
 split_peripherals_num = 1
-

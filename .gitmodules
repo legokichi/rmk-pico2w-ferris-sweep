@@ -1,0 +1,3 @@
+[submodule "rmk"]
+	path = rmk
+	url = git@github.com:legokichi/rmk.git
