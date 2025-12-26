@@ -235,6 +235,17 @@ where
     I2C: I2c,
     RDY: InputPin,
 {
+    pub async fn acknowledge_reset(&mut self) -> Result<(), I2C::Error> {
+        self.wait_ready().await?;
+        self.write_reg_u8(
+            registers::SYSTEM_CONTROL_0,
+            registers::SYSTEM_CONTROL_0_ACK_RESET,
+        )
+        .await?;
+        self.end_session().await?;
+        Ok(())
+    }
+
     pub async fn read_report(&mut self) -> Result<Report, I2C::Error> {
         self.wait_ready().await?;
         let report = self.read_report_now().await?;

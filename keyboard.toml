@@ -52,6 +52,19 @@ direct_pins = [
     ["PIN_6"],
 ]
 
+[[split.central.input_device.iqs5xx]]
+name = "trackpad"
+rdy = "PIN_3"
+rst = "PIN_2"
+poll_interval_ms = 5
+
+[split.central.input_device.iqs5xx.i2c]
+instance = "I2C0"
+sda = "PIN_0"
+scl = "PIN_1"
+address = 0x74
+frequency = 400000
+
 [[split.peripheral]]
 rows = 1
 cols = 1
