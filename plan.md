@@ -67,10 +67,39 @@ TPS65 は iqs5xx のチップを積んでおり、以下のドライバのサン
 - `examples/raw_driver.rs` と `examples/rmk_integration.rs` を追加（no_std + panic handler）。
 - `examples/embassy_rp_pico2w.rs` を追加（embassy-rp + I2C 初期化の実機向けサンプル）。
 - `cargo check` / `cargo check --examples` / `cargo fmt` / `cargo clippy --lib --examples` を実行。
+- RMK 側のIQS5xx統合を実装し、`rmk` サブモジュールでブランチ `iqs5xx-input-device` を作成してコミット。
 
 ## 次にやること候補
 - `examples/embassy_rp_pico2w.rs` の SDA/SCL/RDY/RST ピン割り当てを実配線に合わせて調整。
 - RMK 側の `run_devices!` に接続する具体例を追加。
+
+## RMKにIQS5xxを使うサンプルコード（実装案）
+
+目的: `keyboard.toml` で `iqs5xx` を設定したときの最小動作例を RMK 側の examples に追加する。
+
+### 追加場所案
+- `rmk/examples/use_config/rp2350/` もしくは `rmk/examples/use_config/rp2040/` にサンプルを追加
+  - `keyboard.toml` に `[[input_device.iqs5xx]]` を書き、`rmk` マクロの自動生成で動かす例
+- もしくは `rmk/examples/use_rust/rp2350/` に「手動追加」版を追加
+  - `Iqs5xxDevice`/`Iqs5xxProcessor` をコードで組み込む例
+
+### サンプル内容（config版）
+- `keyboard.toml` に以下を追加
+  - `[[input_device.iqs5xx]]` or `[[split.central.input_device.iqs5xx]]`
+  - `i2c.instance/sda/scl/address/frequency`
+  - `rdy/rst`
+  - `poll_interval_ms`, `enable_scroll`, `scroll_divisor`
+- 既存の `src/main.rs` はそのまま（`#[rmk_*]` マクロで自動初期化）
+- 動作確認: `cargo build --release --bin central` (splitの場合)
+
+### サンプル内容（手動版）
+- `Iqs5xxDevice::new` と `Iqs5xxProcessor::new` を作成
+- `run_devices!` に trackpad を追加
+- `run_processor_chain!` に processor を追加
+
+### ドキュメント更新
+- `rmk/docs/.../configuration/input_device/iqs5xx.md` に examples のパスを追記
+- もし config 版なら `input_device/index.md` からも参照を追加
 
 ## RMK 側修正の方針（やることと変更箇所）
 
