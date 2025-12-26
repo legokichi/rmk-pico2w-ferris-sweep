@@ -7,3 +7,6 @@
 [submodule "zmk-driver-azoteq-iqs5xx"]
 	path = zmk-driver-azoteq-iqs5xx
 	url = git@github.com:legokichi/zmk-driver-azoteq-iqs5xx.git
+[submodule "iqs5xx"]
+	path = iqs5xx
+	url = git@github.com:legokichi/iqs5xx.git
