@@ -16,12 +16,20 @@ mod rmk_example {
     use embedded_hal::digital::{InputPin, OutputPin};
     use embedded_hal_async::i2c::I2c;
     use rmk::keymap::KeyMap;
+    use rmk_driver_azoteq_iqs5xx::Iqs5xxConfig;
     use rmk_driver_azoteq_iqs5xx::rmk_support::{
         Iqs5xxDevice, Iqs5xxProcessor, Iqs5xxProcessorConfig,
     };
-    use rmk_driver_azoteq_iqs5xx::Iqs5xxConfig;
 
-    async fn sample<I2C, RDY, RST, const ROW: usize, const COL: usize, const NUM_LAYER: usize, const NUM_ENCODER: usize>(
+    async fn sample<
+        I2C,
+        RDY,
+        RST,
+        const ROW: usize,
+        const COL: usize,
+        const NUM_LAYER: usize,
+        const NUM_ENCODER: usize,
+    >(
         i2c: I2C,
         rdy: RDY,
         rst: RST,

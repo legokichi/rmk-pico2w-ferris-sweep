@@ -332,12 +332,18 @@ where
         )
         .await?;
 
-        self.write_reg_u8(registers::BOTTOM_BETA, self.config.bottom_beta).await?;
-        self.write_reg_u8(registers::STATIONARY_THRESHOLD, self.config.stationary_threshold)
+        self.write_reg_u8(registers::BOTTOM_BETA, self.config.bottom_beta)
             .await?;
+        self.write_reg_u8(
+            registers::STATIONARY_THRESHOLD,
+            self.config.stationary_threshold,
+        )
+        .await?;
 
-        let filter_settings = registers::FILTER_IIR | registers::FILTER_MAV | registers::FILTER_ALP_COUNT;
-        self.write_reg_u8(registers::FILTER_SETTINGS, filter_settings).await?;
+        let filter_settings =
+            registers::FILTER_IIR | registers::FILTER_MAV | registers::FILTER_ALP_COUNT;
+        self.write_reg_u8(registers::FILTER_SETTINGS, filter_settings)
+            .await?;
 
         let mut single = 0u8;
         if self.config.enable_single_tap {
@@ -346,7 +352,8 @@ where
         if self.config.enable_press_and_hold {
             single |= registers::GESTURE_PRESS_HOLD;
         }
-        self.write_reg_u8(registers::SINGLE_FINGER_GESTURES_CONF, single).await?;
+        self.write_reg_u8(registers::SINGLE_FINGER_GESTURES_CONF, single)
+            .await?;
         self.write_reg_u16(registers::HOLD_TIME, self.config.press_and_hold_time_ms)
             .await?;
 
@@ -357,7 +364,8 @@ where
         if self.config.enable_scroll {
             multi |= registers::GESTURE_SCROLL;
         }
-        self.write_reg_u8(registers::MULTI_FINGER_GESTURES_CONF, multi).await?;
+        self.write_reg_u8(registers::MULTI_FINGER_GESTURES_CONF, multi)
+            .await?;
 
         let mut xy_config = 0u8;
         if self.config.invert_x {
@@ -406,14 +414,14 @@ fn i16_be_from_iter<'a, I: core::iter::Iterator<Item = &'a u8>>(i: &mut I) -> i1
 #[cfg(feature = "rmk")]
 pub mod rmk_support {
     use super::{Event as IqsEvent, Iqs5xx, Iqs5xxConfig};
-    use embassy_time::{Duration, Timer};
-    use embedded_hal::digital::{InputPin, OutputPin};
-    use embedded_hal_async::i2c::I2c;
     use ::rmk::channel::KEYBOARD_REPORT_CHANNEL;
     use ::rmk::event::{Axis, AxisEvent, AxisValType, Event};
     use ::rmk::hid::Report as RmkReport;
     use ::rmk::input_device::{InputDevice, InputProcessor, ProcessResult};
     use ::rmk::keymap::KeyMap;
+    use embassy_time::{Duration, Timer};
+    use embedded_hal::digital::{InputPin, OutputPin};
+    use embedded_hal_async::i2c::I2c;
     use usbd_hid::descriptor::MouseReport;
 
     const CUSTOM_TAG_CLICK: u8 = 1;
@@ -637,8 +645,13 @@ pub mod rmk_support {
         }
     }
 
-    pub struct Iqs5xxProcessor<'a, const ROW: usize, const COL: usize, const NUM_LAYER: usize, const NUM_ENCODER: usize>
-    {
+    pub struct Iqs5xxProcessor<
+        'a,
+        const ROW: usize,
+        const COL: usize,
+        const NUM_LAYER: usize,
+        const NUM_ENCODER: usize,
+    > {
         keymap: &'a core::cell::RefCell<KeyMap<'a, ROW, COL, NUM_LAYER, NUM_ENCODER>>,
         config: Iqs5xxProcessorConfig,
         buttons: u8,
@@ -663,7 +676,9 @@ pub mod rmk_support {
         }
 
         async fn send_mouse_report(&self, report: MouseReport) {
-            KEYBOARD_REPORT_CHANNEL.send(RmkReport::MouseReport(report)).await;
+            KEYBOARD_REPORT_CHANNEL
+                .send(RmkReport::MouseReport(report))
+                .await;
         }
 
         async fn send_button_state(&self) {
@@ -775,19 +790,17 @@ pub mod rmk_support {
 
                     ProcessResult::Stop
                 }
-                Event::Custom(data) => {
-                    match data[0] {
-                        CUSTOM_TAG_CLICK => {
-                            self.handle_click(data[1]).await;
-                            ProcessResult::Stop
-                        }
-                        CUSTOM_TAG_BUTTON => {
-                            self.handle_button(data[1], data[2] != 0).await;
-                            ProcessResult::Stop
-                        }
-                        _ => ProcessResult::Continue(event),
+                Event::Custom(data) => match data[0] {
+                    CUSTOM_TAG_CLICK => {
+                        self.handle_click(data[1]).await;
+                        ProcessResult::Stop
                     }
-                }
+                    CUSTOM_TAG_BUTTON => {
+                        self.handle_button(data[1], data[2] != 0).await;
+                        ProcessResult::Stop
+                    }
+                    _ => ProcessResult::Continue(event),
+                },
                 _ => ProcessResult::Continue(event),
             }
         }

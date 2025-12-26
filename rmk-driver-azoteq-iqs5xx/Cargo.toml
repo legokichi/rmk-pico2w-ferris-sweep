@@ -18,3 +18,8 @@ usbd-hid = { version = "0.9", optional = true }
 default = []
 rmk = ["dep:rmk", "dep:usbd-hid"]
 defmt = ["dep:defmt"]
+
+[dev-dependencies]
+embassy-executor = { version = "0.9", features = ["arch-cortex-m", "executor-thread"] }
+embassy-rp = { version = "0.8", features = ["rp235xa", "time-driver", "critical-section-impl"] }
+cortex-m-rt = "0.7"

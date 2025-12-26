@@ -6,7 +6,10 @@ an async I2C driver plus optional RMK integration.
 ## Usage (raw driver)
 
 ```rust
-use embassy_time::Timer;
+#![no_std]
+#![no_main]
+
+use embassy_time::{Duration, Timer};
 use embedded_hal_async::i2c::I2c;
 use rmk_driver_azoteq_iqs5xx::{Iqs5xx, Iqs5xxConfig};
 
@@ -27,7 +30,7 @@ where
             // handle event
             let _ = event;
         }
-        Timer::after_millis(5).await;
+        Timer::after(Duration::from_millis(5)).await;
     }
 }
 ```
@@ -64,3 +67,9 @@ let mut tp_proc = Iqs5xxProcessor::new(&keymap, Iqs5xxProcessorConfig::default()
 Notes:
 - `Iqs5xxDevice` emits `Event::Touchpad` for motion/scroll and `Event::Custom` for taps/hold.
 - `Iqs5xxProcessor` converts these into `MouseReport` (x/y + wheel/pan) and button states.
+
+## Examples
+
+- `examples/raw_driver.rs` (no_std polling example)
+- `examples/rmk_integration.rs` (RMK integration sketch, `--features rmk`)
+- `examples/embassy_rp_pico2w.rs` (embassy-rp async I2C example)
