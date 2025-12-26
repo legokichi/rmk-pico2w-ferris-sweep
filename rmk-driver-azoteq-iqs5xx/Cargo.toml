@@ -1,0 +1,20 @@
+[package]
+name = "rmk-driver-azoteq-iqs5xx"
+version = "0.1.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+description = "Azoteq IQS5xx trackpad driver for RMK"
+
+[dependencies]
+embedded-hal = { version = "1.0.0" }
+embedded-hal-async = { version = "1.0.0" }
+embassy-time = { version = "0.5" }
+defmt = { version = "0.3", optional = true }
+
+rmk = { path = "../rmk/rmk", optional = true, default-features = false }
+usbd-hid = { version = "0.9", optional = true }
+
+[features]
+default = []
+rmk = ["dep:rmk", "dep:usbd-hid"]
+defmt = ["dep:defmt"]
