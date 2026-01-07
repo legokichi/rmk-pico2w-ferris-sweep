@@ -20,7 +20,7 @@ clear_storage = true
 [layout]
 rows = 8
 cols = 5
-layers = 1
+layers = 3
 # https://rmk.rs/main/docs/configuration/keymap_configuration/keycodes.html
 matrix_map = """
 (0,0,L) (0,1,L) (0,2,L) (0,3,L) (0,4,L)    (4,0,R) (4,1,R) (4,2,R) (4,3,R) (4,4,R)
@@ -35,7 +35,25 @@ keys = """
 Q W E R T    Y U I O P
 A S D F G    H J K L Semicolon
 Z X C V B    N M Comma Dot Slash
-        Kc3 Kc4  Kc1 Kc2
+        Kc3 TO(1)  TO(2) Kc2
+"""
+
+[[layer]]
+name = "layer2"
+keys = """
+_ _ _ _ _    _ _ _ _ _
+_ _ _ _ _    _ _ _ _ _
+_ _ _ _ _    _ _ _ _ _
+        _ TO(2)  TO(base_layer) _
+"""
+
+[[layer]]
+name = "layer3"
+keys = """
+_ _ _ _ _    _ _ _ _ _
+_ _ _ _ _    _ _ _ _ _
+_ _ _ _ _    _ _ _ _ _
+        _ TO(base_layer)  TO(1) _
 """
 
 [ble]
