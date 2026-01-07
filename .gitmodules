@@ -1,6 +1,7 @@
 [submodule "rmk"]
 	path = rmk
 	url = git@github.com:legokichi/rmk.git
+	branch = iqs5xx-input-device
 [submodule "zmk-keyboard-iqs5xx-dev"]
 	path = zmk-keyboard-iqs5xx-dev
 	url = git@github.com:legokichi/zmk-keyboard-iqs5xx-dev.git
