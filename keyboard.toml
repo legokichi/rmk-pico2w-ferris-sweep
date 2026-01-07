@@ -5,6 +5,7 @@ vendor_id = 0x4c4b
 product_id = 0x4643
 manufacturer = "RMK"
 board = "pi_pico_w"
+serial_number = "vial:f64c2b3c:000001"
 
 [host]
 #一時的に無効化
