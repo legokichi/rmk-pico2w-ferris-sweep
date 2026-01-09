@@ -73,6 +73,34 @@ Split keyboard note: flash `pico2wh-central.uf2` to the central half and
 If the drive does not show up, try a different USB cable/port and re-check
 the BOOTSEL timing.
 
+## BLE debug tips
+
+- Device name length is limited to 22 bytes. Longer names cause a panic at boot.
+- Run with RTT logs:
+  ```sh
+  DEFMT_LOG=debug cargo run --release --bin central
+  ```
+  (This uses `probe-rs run` from `.cargo/config.toml`. For `cargo-embed`, see `Embed.toml`.)
+- Check advertising from the host:
+  ```sh
+  bluetoothctl scan on
+  bluetoothctl devices | rg -i rmk
+  ```
+- Pair from the host:
+  ```sh
+  bluetoothctl
+  pair XX:XX:XX:XX:XX:XX
+  trust XX:XX:XX:XX:XX:XX
+  connect XX:XX:XX:XX:XX:XX
+  ```
+- Capture host-side pairing logs:
+  ```sh
+  sudo btmon -w host-btmon.log
+  ```
+  Then retry pairing and inspect the log for:
+  `LE Enhanced Connection Complete`, `SMP: Pairing`, `Encryption Change`.
+- If bonding info is stale, set `clear_storage = true` once, boot, then revert to `false`.
+
 ## Project layout
 
 - `src/central.rs` / `src/peripheral.rs`: firmware entry points
