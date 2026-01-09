@@ -12,11 +12,10 @@ license = "MIT OR Apache-2.0"
 [dependencies]
 rmk = { path = "./rmk/rmk", features = ["pico_w_ble", "async_matrix", "split", "storage"] }
 embassy-time = { version = "0.5", features = ["defmt"] }
-embassy-rp = { version = "0.8", features = [
+# RP2350 (Pico 2 W) 対応のため embassy-rp 0.9 系に揃える
+embassy-rp = { version = "0.9", features = [
     "rp235xa",
     "defmt",
-    "binary-info",
-    "imagedef-nonsecure-exe",
     "time-driver",
     "critical-section-impl",
 ] }
@@ -30,8 +29,9 @@ portable-atomic = { version = "1.11", features = ["critical-section"] }
 defmt = "1.0"
 defmt-rtt = "1.0"
 panic-probe = { version = "1.0", features = ["print-defmt"] }
-cyw43 = { version = "0.5", features = ["defmt", "firmware-logs", "bluetooth"] }
-cyw43-pio = { version = "0.8", features = ["defmt"] }
+# embassy-rp 0.9 系に合わせて cyw43 / cyw43-pio を更新
+cyw43 = { version = "0.6", features = ["defmt", "firmware-logs", "bluetooth"] }
+cyw43-pio = { version = "0.9", features = ["defmt"] }
 static_cell = "2"
 bt-hci = { version = "0.6", default-features = false, features = ["defmt"] }
 rand = { version = "0.8.4", default-features = false }
@@ -77,7 +77,5 @@ lto = "fat"
 
 # Pico W 系は RMK 公式ガイドで Embassy の特定コミット固定が必要とされているため
 # (crates.io 未反映の修正を使う目的で patch.crates-io を指定)
-[patch.crates-io]
-cyw43 = { git = "https://github.com/embassy-rs/embassy", rev = "faacad6" }
-embassy-time-driver = { git = "https://github.com/embassy-rs/embassy", rev = "faacad6" }
-embassy-time = { git = "https://github.com/embassy-rs/embassy", rev = "faacad6" }
+# 今回は crates.io の版で動作したので一旦無効化
+#[patch.crates-io]

@@ -1,11 +1,14 @@
 [keyboard]
-name = "rmk-pico2w-ferris-sweep"
-product_name = "rmk-pico2w-ferris-sweep"
+# NOTE: BLE のデバイス名は 22 bytes 以内（超えるとパニック）
+name = "rmk-ferris-sweep"
+product_name = "rmk-ferris-sweep"
 vendor_id = 0x4c4b
 product_id = 0x4643
 manufacturer = "RMK"
 board = "pi_pico_w"
 serial_number = "vial:f64c2b3c:000001"
+# NOTE: usb_enable を true から false にするとビルド時にパニックする（no usb info for the chip）
+usb_enable = true
 
 [host]
 #一時的に無効化
@@ -15,7 +18,8 @@ serial_number = "vial:f64c2b3c:000001"
 #vialとsplitには必要
 enabled = true
 # Set `clear_storage` to true to clear all the stored info when the keyboard boots
-clear_storage = true
+# ペアリング情報を保持するため通常は false（初回リセット時だけ true）
+clear_storage = false
 
 [layout]
 rows = 8
