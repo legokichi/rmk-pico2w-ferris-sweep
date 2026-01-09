@@ -36,28 +36,28 @@ matrix_map = """
 [[layer]]
 name = "base_layer"
 keys = """
-Q W E R T    Y U I O P
-A S D F G    H J K L Semicolon
-Z X C V B    N M Comma Dot Slash
-        Kc3 TO(1)  TO(2) Kc2
+Q W E R     T       Y     U     I     O   P
+A S D F     G       H     J     K     L   Semicolon
+Z X C V     B       N     M     Comma Dot Slash
+      TO(2) LShift  LCtrl TO(1)
 """
 
 [[layer]]
 name = "layer2"
 keys = """
-_ _ _ _ _    _ _ _ _ _
-_ _ _ _ _    _ _ _ _ _
-_ _ _ _ _    _ _ _ _ _
-        _ TO(2)  TO(base_layer) _
+F1  F2  F3    F4    F5     F6    F7    F8          F9           F10
+Kc1 Kc2 Kc3   Kc4   Kc5    Kc6   Kc7   Kc8         Kc9          Kc0
+F11 F12 Minus Equal Space  Grave Quote LeftBracket RightBracket Backslash
+              TO(0) LShift LCtrl TO(2)
 """
 
 [[layer]]
 name = "layer3"
 keys = """
-_ _ _ _ _    _ _ _ _ _
-_ _ _ _ _    _ _ _ _ _
-_ _ _ _ _    _ _ _ _ _
-        _ TO(base_layer)  TO(1) _
+Escape MouseAccel0 MouseAccel1 MouseAccel2 Pause      Home           PageDown       PageUp       End             Delete
+Tab    MouseLeft   MouseDown   MouseUp     MouseRight Left           Down           Up           Right           Backspace
+LAlt   LGui        MouseBtn1   MouseBtn3   MouseBtn2  MouseWheelLeft MouseWheelDown MouseWheelUp MouseWheelRight Enter
+                               TO(1)       LShift     LCtrl          TO(0)
 """
 
 [ble]
@@ -69,18 +69,18 @@ connection = "ble"
 [split.central]
 rows = 4
 cols = 5
-row_offset = 0
+row_offset = 4
 col_offset = 0
-ble_addr = [0x18, 0xe2, 0x21, 0x80, 0xc0, 0xc7]
+ble_addr = [0x7e, 0xfe, 0x73, 0x9e, 0x66, 0xe3]
 
 [split.central.matrix]
 matrix_type = "direct_pin"
 direct_pin_low_active = true
 direct_pins = [
-    ["PIN_3", "PIN_12", "PIN_11", "PIN_10", "PIN_2"],
-    ["PIN_13", "PIN_4", "PIN_14", "PIN_15", "PIN_27"],
-    ["PIN_5", "PIN_21", "PIN_20", "PIN_19", "PIN_18"],
-    ["_", "_", "_", "PIN_16", "PIN_17"],
+    ["PIN_6", "PIN_10", "PIN_11", "PIN_12", "PIN_7"],
+    ["PIN_27", "PIN_15", "PIN_14", "PIN_8", "PIN_13"],
+    ["PIN_18", "PIN_19", "PIN_20", "PIN_21", "PIN_9"],
+    ["PIN_17", "PIN_16", "_", "_", "_"],
 ]
 
 # NOTE: The trackpad uses PIN_2/PIN_3 which are now assigned to keys.
@@ -101,18 +101,18 @@ direct_pins = [
 [[split.peripheral]]
 rows = 4
 cols = 5
-row_offset = 4
+row_offset = 0
 col_offset = 0
-ble_addr = [0x7e, 0xfe, 0x73, 0x9e, 0x66, 0xe3]
+ble_addr = [0x18, 0xe2, 0x21, 0x80, 0xc0, 0xc7]
 
 [split.peripheral.matrix]
 matrix_type = "direct_pin"
 direct_pin_low_active = true
 direct_pins = [
-    ["PIN_6", "PIN_10", "PIN_11", "PIN_12", "PIN_7"],
-    ["PIN_27", "PIN_15", "PIN_14", "PIN_8", "PIN_13"],
-    ["PIN_18", "PIN_19", "PIN_20", "PIN_21", "PIN_9"],
-    ["PIN_17", "PIN_16", "_", "_", "_"],
+    ["PIN_3", "PIN_12", "PIN_11", "PIN_10", "PIN_2"],
+    ["PIN_13", "PIN_4", "PIN_14", "PIN_15", "PIN_27"],
+    ["PIN_5", "PIN_21", "PIN_20", "PIN_19", "PIN_18"],
+    ["_", "_", "_", "PIN_16", "PIN_17"],
 ]
 
 [rmk]
