@@ -1,0 +1,7 @@
+# Usage: cargo-embed --release --bin central
+# This file is optional; only needed when using cargo-embed for RTT/logging.
+[default.general]
+chip = "RP2350"
+
+[default.rtt]
+enabled = true
