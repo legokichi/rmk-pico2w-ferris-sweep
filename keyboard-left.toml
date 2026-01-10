@@ -18,7 +18,7 @@ usb_enable = true
 enabled = true
 # Set `clear_storage` to true to clear all the stored info when the keyboard boots
 # ペアリング情報を保持するため通常は false（初回リセット時だけ true）
-clear_storage = false
+clear_storage = true
 
 [aliases]
 # BLE profile keycodes are User0..User(N+3). Clear bond = User(N+2),
