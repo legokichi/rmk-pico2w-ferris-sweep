@@ -12,5 +12,5 @@ linker = "flip-link"
 target = "thumbv8m.main-none-eabihf" # Cortex-M0 and Cortex-M0+
 
 [env]
-DEFMT_LOG = "debug"
+DEFMT_LOG = "info"
 KEYBOARD_TOML_PATH =  { value = "keyboard.toml", relative = true }

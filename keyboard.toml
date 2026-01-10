@@ -19,7 +19,12 @@ usb_enable = true
 enabled = true
 # Set `clear_storage` to true to clear all the stored info when the keyboard boots
 # ペアリング情報を保持するため通常は false（初回リセット時だけ true）
-clear_storage = true
+clear_storage = false
+
+[aliases]
+# BLE profile keycodes are User0..User(N+3). Clear bond = User(N+2),
+# where N = ble_profiles_num (default 3) in [rmk].
+CLR_BT = "User5"
 
 [layout]
 rows = 8
@@ -30,7 +35,7 @@ matrix_map = """
 (0,0,L) (0,1,L) (0,2,L) (0,3,L) (0,4,L)    (4,0,R) (4,1,R) (4,2,R) (4,3,R) (4,4,R)
 (1,0,L) (1,1,L) (1,2,L) (1,3,L) (1,4,L)    (5,0,R) (5,1,R) (5,2,R) (5,3,R) (5,4,R)
 (2,0,L) (2,1,L) (2,2,L) (2,3,L) (2,4,L)    (6,0,R) (6,1,R) (6,2,R) (6,3,R) (6,4,R)
-                          (3,3,L) (3,4,L)    (7,0,R) (7,1,R)
+                        (3,3,L) (3,4,L)    (7,0,R) (7,1,R)
 """
 
 [[layer]]
@@ -54,7 +59,7 @@ F11 F12 Minus Equal Space  Grave Quote LeftBracket RightBracket Backslash
 [[layer]]
 name = "layer3"
 keys = """
-Escape MouseAccel0 MouseAccel1 MouseAccel2 Pause      Home           PageDown       PageUp       End             Delete
+Escape MouseAccel0 MouseAccel1 MouseAccel2 @CLR_BT    @CLR_BT        PageDown       PageUp       End             Delete
 Tab    MouseLeft   MouseDown   MouseUp     MouseRight Left           Down           Up           Right           Backspace
 LAlt   LGui        MouseBtn1   MouseBtn3   MouseBtn2  MouseWheelLeft MouseWheelDown MouseWheelUp MouseWheelRight Enter
                                TO(1)       LShift     LCtrl          TO(0)
@@ -78,9 +83,9 @@ matrix_type = "direct_pin"
 direct_pin_low_active = true
 direct_pins = [
     ["PIN_6", "PIN_10", "PIN_11", "PIN_12", "PIN_7"],
-    ["PIN_27", "PIN_14", "PIN_15", "PIN_8", "PIN_13"],
-    ["PIN_18", "PIN_19", "PIN_21", "PIN_20", "PIN_9"],
-    ["PIN_17", "PIN_16", "_", "_", "_"],
+    ["PIN_27", "PIN_15", "PIN_14", "PIN_8", "PIN_13"],
+    ["PIN_18", "PIN_19", "PIN_20", "PIN_21", "PIN_9"],
+    ["PIN_16", "PIN_17", "_", "_", "_"],
 ]
 
 # NOTE: The trackpad uses PIN_2/PIN_3 which are now assigned to keys.
@@ -112,7 +117,7 @@ direct_pins = [
     ["PIN_3", "PIN_12", "PIN_11", "PIN_10", "PIN_2"],
     ["PIN_13", "PIN_4", "PIN_14", "PIN_15", "PIN_27"],
     ["PIN_5", "PIN_21", "PIN_20", "PIN_19", "PIN_18"],
-    ["_", "_", "_", "PIN_16", "PIN_17"],
+    ["_", "_", "_", "PIN_17", "PIN_16"],
 ]
 
 [rmk]
