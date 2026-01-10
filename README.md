@@ -99,7 +99,34 @@ the BOOTSEL timing.
   ```
   Then retry pairing and inspect the log for:
   `LE Enhanced Connection Complete`, `SMP: Pairing`, `Encryption Change`.
+- Clear host-side pairing info (Ubuntu / BlueZ):
+  - Remove a single device:
+    ```sh
+    bluetoothctl devices | grep rmk
+    bluetoothctl remove XX:XX:XX:XX:XX:XX
+    ```
+  - If it keeps coming back, remove BlueZ cache directly (this deletes stored keys):
+    ```sh
+    bluetoothctl list
+    sudo systemctl stop bluetooth
+    sudo rm -rf /var/lib/bluetooth/<adapter>/<device>
+    sudo systemctl start bluetooth
+    ```
 - If bonding info is stale, set `clear_storage = true` once, boot, then revert to `false`.
+
+## Split BLE topology (central/peripheral/host)
+
+The central half acts as a hub:
+
+```
+[Peripheral (left/right)]  <-- BLE (split link) -->  [Central]  <-- BLE HID -->  [Host PC]
+                                                     |
+                                                     +-- USB HID (when USB is connected)
+```
+
+- Central connects to the other half as BLE central (split link).
+- Central advertises to the host PC as a BLE HID peripheral.
+- Peripheral never connects to the host directly; it sends key data to central.
 
 ## Project layout
 
