@@ -2580,7 +2580,9 @@ dependencies = [
  "defmt 1.0.1",
  "defmt-rtt",
  "embassy-executor",
+ "embassy-futures",
  "embassy-rp",
+ "embassy-sync",
  "embassy-time",
  "json",
  "panic-probe",
@@ -2591,6 +2593,7 @@ dependencies = [
  "reqwest",
  "rmk",
  "static_cell",
+ "trouble-host",
  "xz2",
 ]
 
