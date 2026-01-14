@@ -15,7 +15,6 @@ embassy-sync = { version = "0.7", features = ["defmt"] }
 trouble-host = { version = "0.5.1", features = ["gatt", "scan", "derive", "security"] }
 rmk = { path = "./rmk/rmk", features = ["pico_w_ble", "async_matrix", "split", "storage"] }
 embassy-time = { version = "0.5", features = ["defmt"] }
-embedded-io = "0.6"
 # RP2350 (Pico 2 W) 対応のため embassy-rp 0.9 系に揃える
 embassy-rp = { version = "0.9", features = [
     "rp235xa",

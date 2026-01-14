@@ -128,6 +128,13 @@ The central half acts as a hub:
 - Central advertises to the host PC as a BLE HID peripheral.
 - Peripheral never connects to the host directly; it sends key data to central.
 
+Implementation note: in BLE split mode, the peripheral must send key events even
+when `CONNECTION_STATE` (host connection) is false. The split link is between
+peripheral ↔ central, and the central may not be connected to the host yet.
+Gating peripheral sends on host connection drops key events and makes presses
+look like releases. The BLE split path therefore bypasses the host-connection
+gate for key events.
+
 ## Project layout
 
 - `src/central.rs` / `src/peripheral.rs`: firmware entry points
