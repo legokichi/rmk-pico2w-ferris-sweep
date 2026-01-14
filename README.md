@@ -114,6 +114,18 @@ the BOOTSEL timing.
     ```
 - If bonding info is stale, set `clear_storage = true` once, boot, then revert to `false`.
 
+### Cleanup debug logs
+
+If you added BLE debug logs during investigation, you can remove them with:
+
+```sh
+./scripts/cleanup-debug.sh
+```
+
+This applies:
+- `scripts/cleanup-debug-root.patch` (removes `embedded-io` dependency)
+- `scripts/cleanup-debug-rmk.patch` (removes debug logs in the rmk submodule)
+
 ## Split BLE topology (central/peripheral/host)
 
 The central half acts as a hub:
