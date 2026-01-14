@@ -2584,6 +2584,7 @@ dependencies = [
  "embassy-rp",
  "embassy-sync",
  "embassy-time",
+ "embedded-io",
  "json",
  "panic-probe",
  "portable-atomic",
