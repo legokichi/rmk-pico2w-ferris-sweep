@@ -147,6 +147,13 @@ Gating peripheral sends on host connection drops key events and makes presses
 look like releases. The BLE split path therefore bypasses the host-connection
 gate for key events.
 
+## RP2350 SPI note (Pico 2 W)
+
+If you see split BLE packets arriving as all-zeros (pressed → false), slow down
+the CYW43 PIO SPI clock. This repo applies `RM2_CLOCK_DIVIDER * 2` in
+`rmk-macro/src/chip_init.rs` to keep the GSPI clock at or below 25MHz, which
+fixes bit flips observed on RP2350.
+
 ## Project layout
 
 - `src/central.rs` / `src/peripheral.rs`: firmware entry points

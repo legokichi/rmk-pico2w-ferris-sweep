@@ -253,6 +253,11 @@ debug パターンでも `0xA8 -> 0xA9` のように **直前バイトの MSB �
 対策として、`rmk-macro/src/chip_init.rs` の `cyw43_pio::PioSpi::new` で使用する
 クロック分周比を下げ、**SPI 周波数を 25MHz 以下**に制限する。
 
+## 修正後の結果
+
+`RM2_CLOCK_DIVIDER * 2` に変更後、central 側で `pressed: true` → `pressed: false`
+が正しく受信されることを確認済み。
+
 
 • probrem.md を読みました。
   ログの時系列と HCI 生ログから、問題は SplitMessage の生成/デコードではなく、BLE 送信経路のもっと下（RP2350 ↔ CYW43 の SPI/PIO）で 1ビットが化けていると判断できます。
