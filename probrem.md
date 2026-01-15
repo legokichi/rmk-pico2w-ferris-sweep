@@ -252,3 +252,66 @@ debug パターンでも `0xA8 -> 0xA9` のように **直前バイトの MSB �
 
 対策として、`rmk-macro/src/chip_init.rs` の `cyw43_pio::PioSpi::new` で使用する
 クロック分周比を下げ、**SPI 周波数を 25MHz 以下**に制限する。
+
+
+• probrem.md を読みました。
+  ログの時系列と HCI 生ログから、問題は SplitMessage の生成/デコードではなく、BLE 送信経路のもっと下（RP2350 ↔ CYW43 の SPI/PIO）で 1ビットが化けていると判断できます。
+
+  ### 何が起きているか（ログの事実）
+
+  - peripheral 側では raw head=[0, 1, 0, 0, 0] で pressed=true が正しく生成され、
+    HCI TX の payload にも … 0, 1, 0, 0 … が入っています。
+  - しかし central の HCI RX ですでに … 0, 0, 0, 0 … に変化しています。
+
+  つまり GATT / postcard / central 側のデコード前に壊れているため、
+  「Notify の取り違え」よりも 物理層のビット化けが最も整合的です。
+  さらに debug パターン 0xA8 -> 0xA9 は 直前バイトの MSB が次バイトの LSB に漏れるような
+  サンプリングずれの典型で、これも SPI/PIO のタイミング起因を裏付けます。
+
+  ———
+
+  ## 原因の推定（ソース改変なしの範囲での結論）
+
+  ### 1) RP2350 の E9 erratum（GPIO入力系）
+
+  RP2350 の E9 は GPIO 入力に関する既知のシリコン不具合で、入力周りに問題があることは
+  公式資料・周辺報道で確認されています。(hackster.io (https://www.hackster.io/news/a-surprise-hardware-bug-in-raspberry-pi-s-rp2350-leads-to-unexpected-pull-down-behavior-76b51ec22ede.amp?utm_source=openai))
+  このため PIO を使った高速入力（SPI MISO）に弱い可能性が高いです。
+
+  ### 2) SPI 25MHz 上限の「実測報告」
+
+  RP2350 で PIO SPI が 25MHz を超えるとビットエラーが出るという
+  実測報告もあります（Hackaday コメント）。(hackaday.com (https://hackaday.com/2024/09/04/the-worsening-raspberry-pi-rp2350-e9-erratum-situation/?utm_source=openai))
+  これは公式仕様ではないものの、今回の「1ビット化け」に非常に一致する現象です。
+
+  ———
+
+  ## なぜ Notify 取り違えでは説明できないか
+
+  - もし Notify の取り違えなら 別のパケットに置き換わるのが普通です。
+  - しかし今回のログは、同じパケットの 1ビットだけが変化しているため、
+    パケット欠落より物理層の誤サンプリングが説明として自然です。
+
+  ———
+
+  # 修正案（ただし「ソース改変なし」でできることは限られる）
+
+  根本対処は SPI クロックを下げることですが、
+  これは cyw43-pio の divider を変える必要があり、ソース改変が不可避です。
+
+  ### ソース改変なしでできること
+
+  - 既に divider を落としたビルド済み firmware を使う
+    → もし upstream / fork に存在すればそれを使う
+  - RP2040 に戻す / USB 経路で検証する
+    → RP2350 固有問題を回避
+  - 温度・電源を変えて再現率が変わるか確認
+    → サンプリングタイミング問題の補強材料になる
+  ———
+
+  # 結論（現時点）
+
+  - pressed:true が central で false になる原因は、BLE パケットが中央到達前にビット化けしているため
+  - 最も妥当な原因は RP2350 + CYW43 の SPI/PIO タイミング問題
+  - 修正には SPI クロックの低速化（divider調整）が必要
+      - ただし これはソース改変なしにはできない
